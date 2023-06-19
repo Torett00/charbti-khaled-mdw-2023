@@ -11,7 +11,7 @@ import 'package:pfeflutter/models/fiched.dart';
 import 'package:pfeflutter/models/pointage.dart';
 import 'package:http/http.dart' as http;
 import 'package:pfeflutter/screens/employe.dart';
-import 'package:pfeflutter/screens/fichedepaie.dart';
+
 import 'package:pfeflutter/screens/homee.dart';
 
 import 'dart:typed_data';
