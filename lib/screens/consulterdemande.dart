@@ -45,14 +45,12 @@ class _MyWidgetState extends State<Demande> {
     String entre = widget.entrename;
     String email = widget.email;
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: FutureBuilder<List<Conji2>>(
         future: fetchzData(idd),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
-              appBar: AppBar(
-                title: Text('Demondes conjis'),
-              ),
               body: Container(
                 child: Stack(children: [
                   Positioned(
@@ -62,16 +60,53 @@ class _MyWidgetState extends State<Demande> {
                     child: Column(
                       children: [
                         Image.asset(
-                          '/last1.png',
+                          '/logo2.png',
                           width: 130,
                         ),
                       ],
                     ),
                   ),
                   Positioned(
-                    top: 100,
-                    left: 20,
-                    right: 20,
+                    top: 150,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: Text(
+                        ' demandes Congé ',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 50,
+                    child: Container(
+                        width: 130,
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => Employerdash(
+                                  iduser: idd,
+                                ),
+                              ),
+                            );
+                            print('Button pressed');
+                          },
+                          icon: Icon(
+                              Icons.home), // Replace with your desired icon
+                          label: Text('dashboord'),
+                          // Replace with your desired label
+                        )),
+                  ),
+                  Positioned(
+                    top: 210,
+                    left: 0,
+                    right: 10,
                     child: Container(
                       child: DataTable(
                         border: TableBorder.all(width: 1),
@@ -81,9 +116,9 @@ class _MyWidgetState extends State<Demande> {
                           DataColumn(label: Text('reson'), numeric: false),
                           DataColumn(label: Text('nbrjr'), numeric: true),
                           DataColumn(
-                            label: Text('dateconji'),
+                            label: Text('datecongé'),
                           ),
-                          DataColumn(label: Text('etet')),
+                          DataColumn(label: Text('état')),
                         ],
                         rows: List.generate(
                           snapshot.data!.length,
@@ -113,57 +148,6 @@ class _MyWidgetState extends State<Demande> {
                     ),
                   ),
                 ]),
-              ),
-              drawer: Drawer(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: <Widget>[
-                    DrawerHeader(
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                      ),
-                      child: Stack(children: [
-                        Positioned(
-                          top: 10,
-                          child: Text(
-                            '$entre',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 30,
-                          child: Text(
-                            '$email',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                            ),
-                          ),
-                        ),
-                      ]),
-                    ),
-                    ListTile(
-                      title: Text('Logout'),
-                      onTap: () {
-                        // Handle option 1
-                      },
-                    ),
-                    ListTile(
-                      title: Text('Profile '),
-                      onTap: () {
-                        // Handle option 2
-                      },
-                    ),
-                    ListTile(
-                      title: Text(' Suivi Demande '),
-                      onTap: () {},
-                    ),
-                    // Add more ListTile widgets for additional options
-                  ],
-                ),
               ),
             );
           } else {

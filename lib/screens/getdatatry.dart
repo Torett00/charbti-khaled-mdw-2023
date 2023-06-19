@@ -10,12 +10,13 @@ import 'package:pfeflutter/screens/fromTo.dart';
 import 'package:pfeflutter/screens/lastetapereservation.dart';
 
 class trtdata extends StatefulWidget {
-  String station11, station22;
+  String station11, station22, test;
 
   trtdata({
     Key? key,
     required this.station11,
     required this.station22,
+    required this.test,
   }) : super(key: key);
 
   @override
@@ -29,14 +30,21 @@ class _DataWidgetState extends State<trtdata> {
 
   List<Reservation> reservation = [];
   List<Reservation> res = [];
-  String distance = '';
+  String distancee = '';
   String prixx = '';
 
   List<int> idvoyagee = [];
   List<Entreprise> entreprise = [];
   List<Entreprise> entr = [];
-
-  Future<Ligne> fetchzData() async {
+  List<String> temps = [];
+  List<String> tempslast = [];
+  List<int> entrepr = [];
+  List<String> entrenames = [];
+  List<Entreprise> testentr = [];
+  List<String> priiix = [];
+  List<String> entreprisename = [];
+  List<String> tempss = [];
+  Future<List<Ligne>> fetchzData() async {
     var url = Uri.parse('http://127.0.0.1:8000/api/getallligne');
     final response = await http.get(url);
 
@@ -49,41 +57,80 @@ class _DataWidgetState extends State<trtdata> {
               fruit.depart == widget.station22)
           .toList();
 
-      return longFruits[0];
+      return longFruits;
     } else {
       throw Exception('Unexpected error occured!');
     }
   }
 
-  Future<List<Reservation>> getvoyage() async {
-    Ligne ix = await fetchzData();
-    int idd = ix.id;
-    distance = ix.distance;
-    prixx = ix.prix;
-
-    var url = Uri.parse('http://127.0.0.1:8000/api/voyage/$idd');
+  Future<List<Voyage>> getvoyageee(String id) async {
+    var url = Uri.parse('http://127.0.0.1:8000/api/voyage/$id');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       datavoyage = jsonResponse.map((data) => Voyage.fromJson(data)).toList();
       List<Voyage> hhh = datavoyage;
-      datavoyage.forEach((element) {
-        idvoyagee.add(element.id);
-      });
-      for (int el in idvoyagee) {
-        var url = Uri.parse('http://127.0.0.1:8000/api/getrall/$el');
-        final response = await http.get(url);
-        if (response.statusCode == 200) {
-          List jsonResponse = json.decode(response.body);
-          res = jsonResponse.map((data) => Reservation.fromJson(data)).toList();
-          reservation.addAll(res);
-        }
-      }
-      return reservation;
+      return hhh;
     } else {
       throw Exception('Unexpected error occured!');
     }
+  }
+
+  Future<Entreprise> getentreprise(String id) async {
+    var url = Uri.parse('http://127.0.0.1:8000/api/entre/$id');
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      testentr = jsonResponse.map((data) => Entreprise.fromJson(data)).toList();
+      return testentr[0];
+    } else {
+      throw Exception('Unexpected error occured!');
+    }
+  }
+
+  Future<List<Reservation>> getvoyagee() async {
+    List<Ligne> ix = await fetchzData();
+
+    List<Reservation> lastreservation = [];
+    distancee = ix[0].distance;
+    var v = 0;
+    for (var i = 0; i < ix.length; i++) {
+      List<Voyage> voyag = await getvoyageee(ix[i].id.toString());
+      List<Reservation> reservation = [];
+
+      for (var element in voyag) {
+        try {
+          var url =
+              Uri.parse('http://127.0.0.1:8000/api/getrall/${element.id}');
+          final response = await http.get(url);
+          String prix = ix[i].prix;
+          if (response.statusCode == 200) {
+            List jsonResponse = json.decode(response.body);
+            List<Reservation> res =
+                jsonResponse.map((data) => Reservation.fromJson(data)).toList();
+            tempss.add(element.temps.toString());
+
+            String idres = res[0].entrepriseId.toString();
+            Entreprise entree = await getentreprise(idres);
+            entreprisename.add(entree.name);
+            priiix.add(prix);
+            print(ix[i].prix);
+            reservation.addAll(res);
+
+            v++;
+          }
+        } catch (e) {
+          // Handle error case for failed network request or unexpected response
+          print('Error: $e');
+        }
+      }
+
+      lastreservation.addAll(reservation);
+    }
+
+    return lastreservation;
   }
 
   @override
@@ -96,33 +143,50 @@ class _DataWidgetState extends State<trtdata> {
         child: Stack(children: [
           Positioned(
             top: 50,
+            left: 30,
             child: Container(
-                width: 100,
+                width: 70,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Fromto(),
-                      ),
-                    );
-                    print('Button pressed');
+                    if (widget.test == '0') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Fromto(
+                            test: '0',
+                          ),
+                        ),
+                      );
+                      print('Button pressed');
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Fromto(
+                            test: widget.test,
+                          ),
+                        ),
+                      );
+                      print('Button pressed');
+                    }
                   },
-                  icon: Icon(Icons.home), // Replace with your desired icon
-                  label: Text('Home'),
+                  icon:
+                      Icon(Icons.arrow_back), // Replace with your desired icon
+                  label: Text(''),
                   // Replace with your desired label
                 )),
           ),
           Positioned(
-            top: 50,
+            top: 100,
             left: 15,
             right: 15,
             child: Center(
               child: Container(
                 child: Text(
-                  'Reservation disponible De ${ss11} A ${ss22} ',
+                  'Voyages disponible De ${ss11} A ${ss22} ',
                   style: TextStyle(
-                      fontFamily: AutofillHints.creditCardExpirationDay,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
                       color: Colors.black,
                       fontSize: 25),
                 ),
@@ -130,26 +194,70 @@ class _DataWidgetState extends State<trtdata> {
             ),
           ),
           Positioned(
-            top: 150,
-            left: 20,
-            right: 20,
+            top: 200,
+            left: 0,
+            right: 0,
             child: Container(
               child: FutureBuilder<List<Reservation>>(
-                future: getvoyage(),
+                future: getvoyagee(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
                       child: DataTable(
-                        border: TableBorder.all(width: 1),
-                        columnSpacing: 30,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.blue.withOpacity(0.4),
+                              blurRadius: 10,
+                              spreadRadius: 2,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.black),
+                        ),
+                        columnSpacing: 20,
                         columns: const [
-                          DataColumn(label: Text('depart'), numeric: false),
-                          DataColumn(label: Text('arrive'), numeric: false),
-                          DataColumn(label: Text('distance'), numeric: true),
                           DataColumn(
-                            label: Text('prix'),
-                          ),
-                          DataColumn(label: Text('reserve')),
+                              label: Text(
+                                'Temps',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.none),
+                              ),
+                              numeric: false),
+                          DataColumn(
+                              label: Text(
+                                'prix',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.none),
+                              ),
+                              numeric: false),
+                          DataColumn(
+                              label: Text(
+                                'Entreprise',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.none),
+                              ),
+                              numeric: true),
+                          DataColumn(
+                              label: Text(
+                            'Action',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.none),
+                          )),
                         ],
                         rows: List.generate(
                           snapshot.data!.length,
@@ -157,35 +265,43 @@ class _DataWidgetState extends State<trtdata> {
                             var data = snapshot.data![index];
                             return DataRow(cells: [
                               DataCell(
-                                Text(ss11.toString()),
+                                Text(
+                                  tempss[index],
+                                  style: TextStyle(fontSize: 20),
+                                ),
                               ),
                               DataCell(
-                                Text(ss22.toString()),
+                                Text(
+                                  priiix[index],
+                                  style: TextStyle(fontSize: 20),
+                                ),
                               ),
                               DataCell(
-                                Text(distance),
-                              ),
-                              DataCell(
-                                Text(prixx),
+                                Text(
+                                  entreprisename[index],
+                                  style: TextStyle(fontSize: 20),
+                                ),
                               ),
                               DataCell(ElevatedButton(
                                 onPressed: () {
                                   // Add your button click logic here
-
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => lastofus(
+                                        tempps: tempss[index],
+                                        identre: data.entrepriseId.toString(),
                                         station11: ss11.toString(),
                                         station22: ss22.toString(),
                                         res: data,
-                                        distance: distance,
-                                        prixx: prixx,
+                                        distance: distancee,
+                                        prixx: priiix[index],
+                                        testt: widget.test,
                                       ),
                                     ),
                                   );
                                 },
-                                child: Text('Pickdate'),
+                                child: Text('Reserve'),
                               ))
                             ]);
                           },

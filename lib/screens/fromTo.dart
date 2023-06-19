@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:pfeflutter/screens/employe.dart';
 
 import 'package:pfeflutter/screens/getdatatry.dart';
 import 'package:pfeflutter/screens/homee.dart';
@@ -10,7 +11,11 @@ import 'package:pfeflutter/screens/homee.dart';
 import '../constant.dart';
 
 class Fromto extends StatefulWidget {
-  const Fromto({super.key});
+  String test;
+  Fromto({
+    Key? key,
+    required this.test,
+  }) : super(key: key);
 
   @override
   State<Fromto> createState() => _MyWidgetState();
@@ -38,40 +43,69 @@ class _MyWidgetState extends State<Fromto> {
         child: Stack(
           children: [
             Positioned(
+              top: 30,
+              left: 0,
+              right: 0,
+              child: Column(
+                children: [
+                  Image.asset(
+                    '/logo2.png',
+                    width: 130,
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
               top: 50,
               child: Container(
                   width: 100,
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(),
-                        ),
-                      );
+                      if (widget.test == '0') {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Employerdash(
+                              iduser: widget.test,
+                            ),
+                          ),
+                        );
+                      }
+
                       print('Button pressed');
                     },
-                    icon: Icon(Icons.home), // Replace with your desired icon
+                    icon: Icon(
+                        Icons.arrow_back), // Replace with your desired icon
                     label: Text('Home'),
                     // Replace with your desired label
                   )),
             ),
             Positioned(
-              top: 80,
+              top: 170,
               left: 0,
               right: 0,
               child: Center(
                 child: Text(
-                  'From',
+                  'Depart',
                   style: TextStyle(
-                      fontSize: 25, fontFamily: AutofillHints.addressState),
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                  ),
                 ),
               ),
             ),
             Positioned(
-              top: 140,
-              left: 0,
-              right: 0,
+              top: 220,
+              left: 10,
+              right: 10,
               child: DropdownButton(
                 items: data.map((e) {
                   return DropdownMenuItem(
@@ -90,22 +124,23 @@ class _MyWidgetState extends State<Fromto> {
               ),
             ),
             Positioned(
-              top: 200,
+              top: 290,
               left: 0,
               right: 0,
               child: Center(
                 child: Text(
-                  'To',
+                  'Arrivée',
                   style: TextStyle(
                       fontSize: 25,
-                      fontFamily: AutofillHints.streetAddressLine3),
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic),
                 ),
               ),
             ),
             Positioned(
-              top: 260,
-              left: 0,
-              right: 0,
+              top: 340,
+              left: 10,
+              right: 10,
               child: DropdownButton(
                 items: data.map((e) {
                   return DropdownMenuItem(
@@ -124,21 +159,23 @@ class _MyWidgetState extends State<Fromto> {
               ),
             ),
             Positioned(
-              top: 400,
+              top: 430,
               left: 100,
               right: 100,
               child: loading
                   ? Center(
                       child: CircularProgressIndicator(),
                     )
-                  : kbutton('affiche', () {
+                  : kbutton('Consulter', () {
                       dispose();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => trtdata(
-                              station11: Station1.toString(),
-                              station22: Station2.toString()),
+                            station11: Station1.toString(),
+                            station22: Station2.toString(),
+                            test: widget.test,
+                          ),
                         ),
                       );
                     }),

@@ -25,52 +25,93 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 children: [
                   Image.asset(
-                    '/last1.png',
+                    '/logo2.png',
                     width: 130,
                   ),
                 ],
               ),
             ),
-            Positioned(
-              top: 150,
-              left: 15,
-              right: 15,
+            const Positioned(
+              top: 200,
+              left: 270,
+              right: 0,
               child: Center(
                 child: Text(
-                  'Réservez vos billets de train, de bus et davion',
+                  'Réservez voyage',
                   style: TextStyle(fontSize: 25),
                 ),
               ),
             ),
             Positioned(
-              top: 220,
-              left: 0,
+              top: 280,
+              left: 250,
               right: 0,
               child: Center(
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (_) => Fromto()));
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => Fromto(
+                                  test: '0',
+                                )));
                   },
                   child: Text('Try It'),
                 ),
               ),
             ),
             Positioned(
-              top: 320,
-              left: 0,
+                top: 170,
+                left: 15,
+                right: 15,
+                child: Container(
+                  width: 300,
+                  height: 200,
+                  child: Stack(children: [
+                    SizedBox(
+                      width: 240,
+                      height: 250, // Set the desired width
+                      child: Image.asset(
+                        'reserv3.png',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ]),
+                )),
+            Positioned(
+                top: 350,
+                left: 15,
+                right: 15,
+                child: Container(
+                  width: 300,
+                  height: 200,
+                  child: Stack(children: [
+                    Positioned(
+                      left: 130,
+                      child: SizedBox(
+                        width: 270,
+                        height: 250, // Set the desired width
+                        child: Image.asset(
+                          'teaam3.png',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    )
+                  ]),
+                )),
+            Positioned(
+              top: 420,
+              left: 10,
               right: 0,
-              child: Center(
-                child: Text(
-                  'Our team',
-                  style: TextStyle(fontSize: 30, color: Colors.black45),
-                ),
+              child: Text(
+                'Notre équipe',
+                style: TextStyle(fontSize: 25),
               ),
             ),
             Positioned(
-              top: 370,
-              left: 0,
-              right: 0,
+              top: 460,
+              left: 20,
+              right: 250,
               child: Center(
                 child: ElevatedButton(
                   onPressed: () {

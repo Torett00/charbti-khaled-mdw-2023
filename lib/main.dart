@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pfeflutter/screens/fichedepaie.dart';
 
 import 'package:pfeflutter/screens/homee.dart';
 import 'package:pfeflutter/screens/loading.dart';
@@ -20,11 +21,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Bustraffic',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Flutter Bustraffic '),
     );
   }
 }
@@ -36,14 +38,14 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
         splash: Column(children: [
-          Image.asset('output-onlinepngtools.png'),
+          Image.asset('logo4.png'),
           const Text(
             'iBenvenue',
             style: TextStyle(
-                fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
+                fontSize: 40, fontWeight: FontWeight.bold, color: Colors.blue),
           )
         ]),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
         splashIconSize: 250,
         duration: 4000,
         splashTransition: SplashTransition.slideTransition,

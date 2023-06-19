@@ -99,19 +99,21 @@ class _MyWidgetState extends State<Dconji> {
                 )),
           ),
           Positioned(
-            top: 50,
+            top: 70,
             left: 0,
             right: 0,
             child: Center(
               child: Text(
-                'Feed Data',
+                'Saisir les données',
                 style: TextStyle(
-                    fontSize: 30, fontFamily: AutofillHints.givenName),
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic),
               ),
             ),
           ),
           Positioned(
-            top: 100,
+            top: 150,
             left: 30,
             right: 30,
             child: Container(
@@ -120,8 +122,8 @@ class _MyWidgetState extends State<Dconji> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: [
-                      Color(0xffff4590),
-                      Color(0xff382743),
+                      Color.fromARGB(255, 23, 142, 240),
+                      Color.fromARGB(255, 232, 233, 234),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -203,7 +205,7 @@ class _MyWidgetState extends State<Dconji> {
                         ? Center(
                             child: CircularProgressIndicator(),
                           )
-                        : kbotconji('Register', () {
+                        : kbotconji('Demender', () {
                             if (formkey.currentState!.validate()) {
                               setState(() {
                                 loading = true;

@@ -55,7 +55,7 @@ TextButton kbotconji(String text, Function onPressed) {
           Size(50, 50), // Set the desired width and height here
         ),
         backgroundColor:
-            MaterialStateColor.resolveWith((states) => Colors.black),
+            MaterialStateColor.resolveWith((states) => Colors.blue),
         padding: MaterialStateProperty.resolveWith(
             (states) => EdgeInsets.symmetric(vertical: 10))),
     onPressed: () => onPressed(),
