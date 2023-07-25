@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:pfeflutter/models/employe.dart';
 import 'package:pfeflutter/models/entreprise.dart';
 import 'package:pfeflutter/screens/conjii.dart';
@@ -13,7 +12,6 @@ import 'package:pfeflutter/screens/pointage.dart';
 import 'package:http/http.dart' as http;
 import 'package:pfeflutter/screens/profileemp.dart';
 import 'package:pfeflutter/services/user_service.dart';
-import 'package:pfeflutter/services/voyage_service.dart';
 
 class Employerdash extends StatefulWidget {
   String iduser;

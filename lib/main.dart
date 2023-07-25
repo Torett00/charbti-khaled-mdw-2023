@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pfeflutter/screens/fichedepaie.dart';
 
 import 'package:pfeflutter/screens/homee.dart';
 import 'package:pfeflutter/screens/loading.dart';
 import 'package:pfeflutter/screens/register.dart';
-import 'package:pfeflutter/screens/test.dart';
-import 'package:pfeflutter/screens/testssss.dart';
+
 import 'screens/login.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';

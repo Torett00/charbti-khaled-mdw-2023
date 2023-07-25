@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
 import 'package:pfeflutter/constant.dart';
 import 'package:pfeflutter/models/api_response.dart';
 import 'package:pfeflutter/models/employe.dart';
@@ -12,12 +10,9 @@ import 'package:pfeflutter/models/pointage.dart';
 import 'package:http/http.dart' as http;
 import 'package:pfeflutter/screens/employe.dart';
 
-import 'package:pfeflutter/screens/homee.dart';
-
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 import 'mobile.dart' if (dart.library.html) 'web.dart';

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:pfeflutter/constant.dart';
 import 'package:pfeflutter/models/api_response.dart';
-import 'package:pfeflutter/models/user2.dart';
+
 import 'package:pfeflutter/models/user3.dart';
 import 'package:pfeflutter/screens/employe.dart';
 
 import 'package:pfeflutter/screens/loading.dart';
 import 'package:pfeflutter/services/user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:pfeflutter/models/user.dart';
-import 'register.dart';
+
 import 'homee.dart';
 
 class Login extends StatefulWidget {
